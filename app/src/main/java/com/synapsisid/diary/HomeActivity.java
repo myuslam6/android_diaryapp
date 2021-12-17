@@ -1,12 +1,15 @@
 package com.synapsisid.diary;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +40,8 @@ public class HomeActivity extends AppCompatActivity {
         prepareRc();
         listener();
         getData();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(bc, new IntentFilter("LOGOUT"));
 
     }
 
@@ -72,7 +77,10 @@ public class HomeActivity extends AppCompatActivity {
     private void getData(){
         List<DiaryTable> listDiary = AppDatabase.getInstance(this).databaseDao().getListPublicDiary();
         adapter.setNewData(listDiary);
-        Log.w("WEDEBUG",Integer.toString(listDiary.size()));
+
+        int id= getSharedPreferences("my_pref", Context.MODE_PRIVATE).getInt("USER_ID",-1);
+        List<UserTable> user = AppDatabase.getInstance(this).databaseDao().getProfileData(id);
+        binding.tvNameHome.setText(user.get(0).getNama());
     }
 
     private void prepareRc(){
@@ -82,6 +90,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void listener(){
+        binding.ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+            }
+        });
+
         binding.swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -104,4 +119,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    BroadcastReceiver bc = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            HomeActivity.this.finish();
+        }
+    };
 }

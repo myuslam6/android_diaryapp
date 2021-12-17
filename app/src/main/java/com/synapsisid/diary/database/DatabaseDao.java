@@ -43,6 +43,7 @@ public interface DatabaseDao {
     @Query("SELECT * FROM diarytable WHERE isPrivate = 1 ORDER BY lastUpdate DESC")
     List<DiaryTable> getListPrivateDiary();
 
-
+    @Query("SELECT * FROM usertable where id=:inputId")
+    List<UserTable> getProfileData(int inputId);
 
 }

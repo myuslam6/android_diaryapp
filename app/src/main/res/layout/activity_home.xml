@@ -63,6 +63,7 @@
                     app:layout_constraintTop_toTopOf="@id/iv_profile" />
 
                 <TextView
+                    android:id="@+id/tv_name_home"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:text="Jammie Lanister"

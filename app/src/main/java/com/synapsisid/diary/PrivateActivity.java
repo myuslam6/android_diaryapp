@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.synapsisid.diary.database.AppDatabase;
 import com.synapsisid.diary.database.DiaryTable;
@@ -25,6 +26,14 @@ public class PrivateActivity extends AppCompatActivity {
 
         prepareRc();
         getData();
+
+        binding.toolbarPrivate.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PrivateActivity.this.finish();
+            }
+        });
     }
 
     private void getData(){

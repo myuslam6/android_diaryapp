@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(SignUpActivity.this, SignInActivity.class ));
+
                 SignUpActivity.this.finish();
 
             }

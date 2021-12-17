@@ -69,14 +69,20 @@ public class DiaryActivity extends AppCompatActivity {
     private void getData(int id){
         currentData = dao.getDiary(id);
 
-        binding.etTitle.setText(currentData.getJudul());
-        binding.etContent.setText(currentData.getContent());
+        if(currentData==null){
+            Toast.makeText(this, "Diary ini sudah terhapus", Toast.LENGTH_LONG).show();
+            this.finish();
+        }else{
+            binding.etTitle.setText(currentData.getJudul());
+            binding.etContent.setText(currentData.getContent());
 
-        String time = "Created at "+currentData.getTimeCreated();
-        time += "\nLast updated at "+currentData.getLastUpdate();
-        binding.tvDate.setText(time);
+            String time = "Created at "+currentData.getTimeCreated();
+            time += "\nLast updated at "+currentData.getLastUpdate();
+            binding.tvDate.setText(time);
 
-        binding.switchPrivate.setChecked(currentData.isPrivate());
+            binding.switchPrivate.setChecked(currentData.isPrivate());
+        }
+
     }
 
     private boolean validate(){
