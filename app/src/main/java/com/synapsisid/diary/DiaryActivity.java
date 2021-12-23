@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,11 +36,16 @@ public class DiaryActivity extends AppCompatActivity {
 
     private DiaryTable currentData;
 
+    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDiaryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my_pref", Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt("USER_ID",-1);
 
         dao = AppDatabase.getInstance(this).databaseDao();
 
@@ -119,7 +126,8 @@ public class DiaryActivity extends AppCompatActivity {
                                     binding.etContent.getText().toString(),
                                     currentData.getTimeCreated(),
                                     currentData.getLastUpdate(),
-                                    b
+                                    b,
+                                    id
                             )
                     );
                     Toast.makeText(DiaryActivity.this,"Berhasil mengubah mode private",Toast.LENGTH_LONG).show();
@@ -176,7 +184,8 @@ public class DiaryActivity extends AppCompatActivity {
                                         binding.etContent.getText().toString(),
                                         sdf.format(Calendar.getInstance().getTime()),
                                         sdf.format(Calendar.getInstance().getTime()),
-                                        binding.switchPrivate.isChecked()
+                                        binding.switchPrivate.isChecked(),
+                                        id
                                 )
                         );
                         Toast.makeText(DiaryActivity.this,"Berhasil membuat diary baru",Toast.LENGTH_LONG).show();
@@ -188,7 +197,8 @@ public class DiaryActivity extends AppCompatActivity {
                                         binding.etContent.getText().toString(),
                                         currentData.getTimeCreated(),
                                         currentData.getLastUpdate(),
-                                        currentData.isPrivate()
+                                        currentData.isPrivate(),
+                                        id
                                 )
                         );
                         Toast.makeText(DiaryActivity.this,"Data berhasil disimpan",Toast.LENGTH_LONG).show();

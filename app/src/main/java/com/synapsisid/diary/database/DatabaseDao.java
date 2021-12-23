@@ -31,17 +31,20 @@ public interface DatabaseDao {
     @Update
     int updateDiary(DiaryTable data);
 
+    @Update
+    int updateUser(UserTable data);
+
     @Query("SELECT * FROM diarytable WHERE id = :inputId")
     DiaryTable getDiary(int inputId);
 
     @Query("DELETE FROM diarytable WHERE id = :inputId")
     int deleteDiary(int inputId);
 
-    @Query("SELECT * FROM diarytable WHERE isPrivate = 0 ORDER BY lastUpdate DESC")
-    List<DiaryTable> getListPublicDiary();
+    @Query("SELECT * FROM diarytable WHERE userId = :id AND isPrivate = 0 ORDER BY lastUpdate DESC")
+    List<DiaryTable> getListPublicDiary(int id);
 
-    @Query("SELECT * FROM diarytable WHERE isPrivate = 1 ORDER BY lastUpdate DESC")
-    List<DiaryTable> getListPrivateDiary();
+    @Query("SELECT * FROM diarytable WHERE userId = :id AND isPrivate = 1 ORDER BY lastUpdate DESC")
+    List<DiaryTable> getListPrivateDiary(int id);
 
     @Query("SELECT * FROM usertable where id=:inputId")
     List<UserTable> getProfileData(int inputId);

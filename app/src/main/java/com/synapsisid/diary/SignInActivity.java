@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.synapsisid.diary.database.AppDatabase;
+import com.synapsisid.diary.database.DatabaseDao;
 import com.synapsisid.diary.database.UserTable;
 import com.synapsisid.diary.databinding.ActivitySignInBinding;
 
@@ -28,22 +29,22 @@ public class SignInActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("my_pref", Context.MODE_PRIVATE);
         int savedId = sharedPreferences.getInt("USER_ID",-1);
-        Log.w("WEDEBUG",Integer.toString(savedId));
 
+        // jika id yg di save itu ada, maka akan langsung diteruskan ke ActivityHome
         if(savedId > 0){
-
             startActivity(new Intent(SignInActivity.this,HomeActivity.class));
             this.finish();
         }
 
+        // Jika tombol signup di pecnet, maka akan membuka halaman SignUp
         binding.btnGotoSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
-
             }
         });
 
+        // Jika tombol Signin dipencet, maka akan melakukan sign in akun yg sudah ada
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,14 +56,19 @@ public class SignInActivity extends AppCompatActivity {
                     String email = binding.etEmail.getText().toString();
                     String pass = binding.etPassword.getText().toString();
 
-                    List<UserTable> hasil = AppDatabase.getInstance(SignInActivity.this).databaseDao().signIn(
+                    AppDatabase databse = AppDatabase.getInstance(SignInActivity.this);
+
+                    DatabaseDao dao = databse.databaseDao();
+
+                    List<UserTable> hasil = dao.signIn(
                             email,pass
                     );
 
                     if(hasil.size() > 0){
                         AppDatabase.getInstance(SignInActivity.this).databaseDao().getLastId();
+                        //save ke dalam shared preference
                         saveLoginId(hasil.get(0).getId());
-                        Log.w("WEDEBUG",Integer.toString(savedId));
+
                         startActivity(new Intent(SignInActivity.this, HomeActivity.class ));
                     }else{
                         Toast.makeText(SignInActivity.this, "Email atau password salah",Toast.LENGTH_LONG).show();

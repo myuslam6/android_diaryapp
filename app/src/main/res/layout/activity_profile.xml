@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/ic_baseline_edit_24"
+        android:padding="16dp"
+        android:text="Edit Data"
+        android:textColor="@color/black"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_left"
         android:layout_width="60dp"
@@ -39,18 +54,18 @@
 
 
     <EditText
-        android:enabled="false"
         android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
         android:layout_marginEnd="16dp"
+        android:enabled="false"
+        android:hint="Name"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_greet"
+        app:layout_constraintTop_toBottomOf="@+id/btn_edit"
         tools:text="Name" />
 
     <EditText
@@ -63,6 +78,7 @@
         android:layout_marginEnd="16dp"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:hint="Date of birth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
@@ -78,6 +94,7 @@
         android:layout_marginEnd="16dp"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:hint="Gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_dt_birth"
@@ -98,6 +115,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_gender"
         tools:text="Email" />
 
+    <EditText
+        android:id="@+id/tv_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:hint="Password"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_email"
+        tools:text="pass" />
+
     <Button
         android:id="@+id/btn_logOut"
         android:layout_width="0dp"
@@ -110,6 +145,6 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

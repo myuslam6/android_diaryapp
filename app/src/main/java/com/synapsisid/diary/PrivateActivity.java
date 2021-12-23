@@ -3,6 +3,8 @@ package com.synapsisid.diary;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,11 +20,16 @@ public class PrivateActivity extends AppCompatActivity {
     private ActivityPrivateBinding binding;
     DiaryListAdapter adapter;
 
+    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPrivateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my_pref", Context.MODE_PRIVATE);
+        id = sharedPreferences.getInt("USER_ID",-1);
 
         prepareRc();
         getData();
@@ -37,7 +44,7 @@ public class PrivateActivity extends AppCompatActivity {
     }
 
     private void getData(){
-        List<DiaryTable> listDiary = AppDatabase.getInstance(this).databaseDao().getListPrivateDiary();
+        List<DiaryTable> listDiary = AppDatabase.getInstance(this).databaseDao().getListPrivateDiary(id);
         adapter.setNewData(listDiary);
     }
 

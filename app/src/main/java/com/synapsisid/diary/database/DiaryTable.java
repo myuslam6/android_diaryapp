@@ -7,13 +7,14 @@ import androidx.room.PrimaryKey;
 @Entity
 public class DiaryTable {
 
-    public DiaryTable(int id, String judul, String content, String lastUpdate, String timeCreated,boolean isPrivate) {
+    public DiaryTable(int id, String judul, String content, String lastUpdate, String timeCreated,boolean isPrivate, int userId) {
         this.id = id;
         this.judul = judul;
         this.content = content;
         this.lastUpdate = lastUpdate;
         this.timeCreated = timeCreated;
         this.isPrivate = isPrivate;
+        this.userId = userId;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -33,6 +34,17 @@ public class DiaryTable {
 
     @ColumnInfo
     private boolean isPrivate;
+
+    @ColumnInfo
+    private int userId;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public boolean isPrivate() {
         return isPrivate;

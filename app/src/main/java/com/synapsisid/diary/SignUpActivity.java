@@ -25,16 +25,16 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Jika tombol sign in dipencet, maka akan menutup halaman signup
         binding.btnSignInReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 SignUpActivity.this.finish();
 
             }
         });
 
+        // Jika tombol signup dipencet maka akan melakukan pendaftaran akun
         binding.btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this,"Tolong isi data yang benar",Toast.LENGTH_LONG).show();
                 }else{
 
+                    // Buat untuk ngasih akses ke database
                     AppDatabase database = AppDatabase.getInstance(SignUpActivity.this);
 
                     String nama = binding.etName.getText().toString();
@@ -51,11 +52,13 @@ public class SignUpActivity extends AppCompatActivity {
                     String email = binding.etEmail.getText().toString();
                     String password = binding.etPassword.getText().toString();
 
+                    // Untuk transaksi dengan database
                     DatabaseDao dao = database.databaseDao();
 
-                    if(dao.checkEmail(email).size()>0){
+                    if(dao.checkEmail(email).size() > 0){
                         Toast.makeText(SignUpActivity.this,"Email sudah digunakan",Toast.LENGTH_LONG).show();
                     }else{
+
                         dao.signUp(
                                 new UserTable(
                                         0,
@@ -66,13 +69,16 @@ public class SignUpActivity extends AppCompatActivity {
                                         password
                                 )
                         );
-                        int userId = dao.getLastId();
-                        Log.w("WEDEBUG",Integer.toString(userId));
+
+                        // Untuk menyimpan user id ke dalam shared preference
                         saveLoginId(dao.getLastId());
+
+                        startActivity(new Intent(SignUpActivity.this, HomeActivity.class ));
+
+                        SignUpActivity.this.finish();
                     }
 
-                    startActivity(new Intent(SignUpActivity.this, HomeActivity.class ));
-                    SignUpActivity.this.finish();
+
 
                 }
 
